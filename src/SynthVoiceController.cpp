@@ -1,11 +1,7 @@
 #include "SynthVoiceController.h"
 #include "Arduino.h"
 
-SynthVoiceController::SynthVoiceController(uint8_t gate_pin, uint8_t DACcontrolVoltage_pin) {
-    this->gate_pin = gate_pin;
-    pinMode(this->gate_pin, OUTPUT);
-    this->DACcontrolVoltage_pin = DACcontrolVoltage_pin;
-    pinMode(this->DACcontrolVoltage_pin, OUTPUT);
+SynthVoiceController::SynthVoiceController() {
     this->controlVoltageOffset = 0;
 }
 
@@ -13,6 +9,19 @@ float SynthVoiceController::getOffsettedControlVoltage(float controlVoltage) {
     float sumControlVoltage = controlVoltage + controlVoltageOffset;
     return this->convertCVToDACSignal(sumControlVoltage);
 
+}
+
+void SynthVoiceController::setGatePin(uint8_t gate_pin) {
+    this->gate_pin = gate_pin;
+}
+
+void SynthVoiceController::setDACCSPin(uint8_t DACcontrolVoltage_pin) {
+    this->DACcontrolVoltage_pin = DACcontrolVoltage_pin;
+}
+
+void SynthVoiceController::setPinModes() {
+    pinMode(this->gate_pin, OUTPUT);
+    pinMode(this->DACcontrolVoltage_pin, OUTPUT);
 }
 
 float SynthVoiceController::convertCVToDACSignal(float controlVoltage) {

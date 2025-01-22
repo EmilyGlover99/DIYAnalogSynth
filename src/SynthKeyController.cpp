@@ -1,15 +1,40 @@
 #include "SynthKeyController.h"
+#include "SynthVoiceController.h"
 #include "Arduino.h"
 
 
-SynthKeyController::SynthKeyController(){
+SynthKeyController::SynthKeyController(uint8_t maxNumOfVoices, uint8_t numOfPhysicalKeys){
+    this->maxNumOfVoices = maxNumOfVoices;
+    this->voiceAllocation = new uint8_t[this->maxNumOfVoices];
+
+    this->synthVoices = new SynthVoiceController[this->maxNumOfVoices];
+
+    this->numOfPhysicalKeys = numOfPhysicalKeys;
+    this->pressedKeys = new bool[this->numOfPhysicalKeys];
+
     this->resetVoiceAllocation();
+    this->resetPressedKeys();
 }
 
 void SynthKeyController::resetVoiceAllocation(){
     for (int i = 0 ; i < this->maxNumOfVoices ; i++ ){
         this->voiceAllocation[i] = -1;
     }   
+}
+
+void SynthKeyController::resetPressedKeys(){
+    for (int i = 0 ; i < this->numOfPhysicalKeys ; i++ ){
+        this->pressedKeys[i] = 0;
+    }   
+}
+
+void SynthKeyController::updateVoice_pins(const uint8_t* DACCS_pins, const uint8_t* gate_pins){
+
+    for (int voice = 0 ; voice < this->maxNumOfVoices ; voice++){
+        this->synthVoices[voice].setGatePin(gate_pins[voice]);
+        this->synthVoices[voice].setDACCSPin(DACCS_pins[voice]);
+    }
+
 }
 
 void SynthKeyController::updateCurrentlyPressedKeys(){

@@ -9,7 +9,13 @@ class SynthVoiceController {
         float controlVoltageOffset;
 
     public:
-        SynthVoiceController(uint8_t gate_pin, uint8_t DACcontrolVoltage_pin);
+        SynthVoiceController();
+
+        void setGatePin(uint8_t gate_pin);
+
+        void setDACCSPin(uint8_t DACcontrolVoltage_pin);
+
+        void setPinModes();
 
         float getOffsettedControlVoltage(float controlVoltage);
 
@@ -17,4 +23,4 @@ class SynthVoiceController {
 
         void updateCVOffset(float newControlVoltageOffset);
 
-}
+};
