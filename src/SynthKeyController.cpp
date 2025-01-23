@@ -140,14 +140,18 @@ uint8_t SynthKeyController::getNumOfVoices() {
 
 uint8_t** SynthKeyController::getAllVoice_pins() {
 
-    uint8_t** result = new uint8_t*[2];
-    result[0] = new uint8_t[this->maxNumOfVoices];
-    result[1] = new uint8_t[this->maxNumOfVoices];
+    uint8_t* DACCS_pins = new uint8_t[this->maxNumOfVoices];
+    uint8_t* Gate_pins = new uint8_t[this->maxNumOfVoices];
 
     for (int voice = 0; voice < this->maxNumOfVoices; voice++) {
-        result[0][voice] = this->synthVoices[voice].getDACCSPin();
-        result[1][voice] = this->synthVoices[voice].getGatePin();
+        DACCS_pins[voice] = this->synthVoices[voice].getDACCSPin();
+        Gate_pins[voice] = this->synthVoices[voice].getGatePin();
     }
 
-    return result;
+    uint8_t * array_pointers[2];
+    array_pointers[0] = DACCS_pins;
+    array_pointers[1] = Gate_pins;
+
+    uint8_t ** ptr = array_pointers;
+    return ptr;
 }

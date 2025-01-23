@@ -1,5 +1,10 @@
-#include <Arduino.h>
-#include <SynthKeyController.h>
+#ifdef UNIT_TEST
+    #include "ArduinoFake.h"
+#else
+    #include "Arduino.h"
+#endif
+
+#include "SynthKeyController.h"
 
 // Configurable constants
 const uint8_t NUMBER_OF_VOICES = 5;
