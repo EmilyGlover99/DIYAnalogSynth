@@ -1,6 +1,11 @@
 #include "SynthKeyController.h"
 #include "SynthVoiceController.h"
-#include "Arduino.h"
+
+#ifdef UNIT_TEST
+    #include "ArduinoFake.h"
+#else
+    #include "Arduino.h"
+#endif
 
 
 SynthKeyController::SynthKeyController(uint8_t maxNumOfVoices, uint8_t numOfPhysicalKeys){
@@ -125,4 +130,24 @@ void SynthKeyController::manageOSCs() {
     this->setOSCRelatedPins();
 }
 
+uint8_t SynthKeyController::getNumOfPhysicalKeys() {
+    return this->numOfPhysicalKeys;
+}
 
+uint8_t SynthKeyController::getNumOfVoices() {
+    return this->maxNumOfVoices;
+}
+
+uint8_t** SynthKeyController::getAllVoice_pins() {
+
+    uint8_t** result = new uint8_t*[2];
+    result[0] = new uint8_t[this->maxNumOfVoices];
+    result[1] = new uint8_t[this->maxNumOfVoices];
+
+    for (int voice = 0; voice < this->maxNumOfVoices; voice++) {
+        result[0][voice] = this->synthVoices[voice].getDACCSPin();
+        result[1][voice] = this->synthVoices[voice].getGatePin();
+    }
+
+    return result;
+}

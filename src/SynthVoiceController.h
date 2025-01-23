@@ -5,7 +5,7 @@
 class SynthVoiceController {
     private:
         uint8_t gate_pin;
-        uint8_t DACcontrolVoltage_pin;
+        uint8_t DACCS_pin;
         float controlVoltageOffset;
 
     public:
@@ -22,5 +22,9 @@ class SynthVoiceController {
         float convertCVToDACSignal(float offsettedControlVoltage);
 
         void updateCVOffset(float newControlVoltageOffset);
+
+        uint8_t getGatePin();
+
+        uint8_t getDACCSPin();
 
 };

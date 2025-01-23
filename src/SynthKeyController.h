@@ -49,4 +49,10 @@ class SynthKeyController {
 
         void manageOSCs();
 
+        uint8_t getNumOfPhysicalKeys();
+
+        uint8_t getNumOfVoices();
+
+        uint8_t** getAllVoice_pins();
+
 };
